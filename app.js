@@ -77,17 +77,68 @@ function pickDisplayItems() {
   displayItems = wheelData.items;
 }
 
+// --- Taiwan shape map ---
+// Each row: [startCol, count] — forms the outline of Taiwan
+// 30 rows × up to 13 columns, totaling 238 cells
+const TAIWAN_SHAPE = [
+  [7, 2],   // row 0  - north tip (Keelung)
+  [6, 3],   // row 1
+  [5, 6],   // row 2  - Taipei basin
+  [4, 6],   // row 3
+  [3, 7],   // row 4  - Taoyuan
+  [3, 8],   // row 5
+  [2, 9],   // row 6  - Hsinchu
+  [2, 10],  // row 7
+  [1, 11],  // row 8  - Miaoli
+  [1, 11],  // row 9
+  [0, 12],  // row 10 - Taichung (widest)
+  [0, 12],  // row 11
+  [0, 12],  // row 12
+  [0, 12],  // row 13
+  [0, 12],  // row 14 - Changhua
+  [0, 12],  // row 15
+  [1, 11],  // row 16 - Yunlin
+  [1, 10],  // row 17
+  [2, 9],   // row 18 - Chiayi
+  [2, 9],   // row 19
+  [2, 8],   // row 20 - Tainan
+  [3, 8],   // row 21
+  [3, 7],   // row 22 - Kaohsiung
+  [4, 6],   // row 23
+  [4, 6],   // row 24 - Pingtung
+  [5, 5],   // row 25
+  [5, 5],   // row 26
+  [5, 4],   // row 27 - south tip
+  [5, 3],   // row 28
+  [5, 2],   // row 29 - Eluanbi
+];
+
+const GRID_COLS = 13;
+
 // --- Grid rendering ---
 
 function renderGrid() {
   gridContainer.innerHTML = "";
-  displayItems.forEach((item, i) => {
-    const cell = document.createElement("div");
-    cell.className = "grid-cell";
-    cell.dataset.index = i;
-    cell.style.setProperty("--cell-color", item.color);
-    cell.innerHTML = `<span class="grid-label">${item.label}</span>`;
-    gridContainer.appendChild(cell);
+  gridContainer.style.gridTemplateColumns = `repeat(${GRID_COLS}, 1fr)`;
+  gridContainer.style.gridTemplateRows = `repeat(${TAIWAN_SHAPE.length}, 1fr)`;
+
+  let itemIdx = 0;
+
+  TAIWAN_SHAPE.forEach((rowDef, row) => {
+    const [startCol, count] = rowDef;
+
+    for (let c = 0; c < count && itemIdx < displayItems.length; c++) {
+      const item = displayItems[itemIdx];
+      const cell = document.createElement("div");
+      cell.className = "grid-cell";
+      cell.dataset.index = itemIdx;
+      cell.style.setProperty("--cell-color", item.color);
+      cell.style.gridRow = row + 1;
+      cell.style.gridColumn = startCol + c + 1;
+      cell.innerHTML = `<span class="grid-label">${item.label}</span>`;
+      gridContainer.appendChild(cell);
+      itemIdx++;
+    }
   });
 }
 

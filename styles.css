@@ -72,18 +72,16 @@ body {
 /* --- Grid cells --- */
 
 .grid-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
+  display: grid;
+  gap: 3px;
   justify-content: center;
-  margin-bottom: 2rem;
-  min-height: 80px;
+  margin: 0 auto 2rem;
+  max-width: 700px;
 }
 
 .grid-cell {
-  width: 58px;
-  height: 58px;
-  border-radius: 6px;
+  aspect-ratio: 1;
+  border-radius: 5px;
   background: #16213e;
   border: 2px solid #333;
   display: flex;
@@ -91,19 +89,25 @@ body {
   justify-content: center;
   transition: all 0.15s ease;
   position: relative;
+  min-width: 0;
 }
 
 .grid-cell .grid-label {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
   color: #888;
   transition: color 0.15s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  padding: 0 2px;
 }
 
 .grid-cell.active {
   background: var(--cell-color);
   border-color: #fff;
-  transform: scale(1.1);
+  transform: scale(1.15);
   box-shadow: 0 0 20px var(--cell-color), 0 0 40px rgba(255,255,255,0.1);
   z-index: 2;
 }
@@ -282,7 +286,6 @@ canvas {
 @media (max-width: 540px) {
   .container { padding: 0.5rem; }
   .title { font-size: 1.8rem; }
-  .grid-container { gap: 3px; }
-  .grid-cell { width: 44px; height: 44px; }
-  .grid-cell .grid-label { font-size: 0.6rem; }
+  .grid-container { gap: 2px; max-width: 100%; }
+  .grid-cell .grid-label { font-size: 0.55rem; }
 }
