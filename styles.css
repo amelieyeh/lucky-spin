@@ -101,10 +101,50 @@ body {
   height: 108px;
 }
 
+.flag-icon {
+  width: 80px;
+  height: 56px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+}
+
 .card-label {
   font-size: 1.1rem;
   font-weight: 600;
   color: #eee;
+}
+
+.home-card-custom {
+  position: relative;
+}
+
+.home-card-custom:hover {
+  border-color: #4ECDC4;
+  box-shadow: 0 8px 30px rgba(78, 205, 196, 0.15);
+}
+
+.custom-icon {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4ECDC4;
+  line-height: 1;
+}
+
+.card-delete {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 1.3rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+  z-index: 1;
+}
+
+.card-delete:hover {
+  color: #ff4757;
 }
 
 .home-card-create {
@@ -177,6 +217,18 @@ body {
   max-width: 700px;
 }
 
+.grid-container.grid-map {
+  display: block;
+  position: relative;
+  padding-bottom: 100%;
+  max-width: 600px;
+}
+
+.grid-map .grid-cell {
+  position: absolute;
+  aspect-ratio: auto;
+}
+
 .grid-container.grid-plain {
   grid-template-columns: repeat(auto-fill, 58px);
   max-width: 1200px;
@@ -205,6 +257,19 @@ body {
   white-space: nowrap;
   max-width: 100%;
   padding: 0 2px;
+}
+
+.grid-cell-region {
+  border-color: var(--region-color);
+}
+
+.grid-cell-region .grid-label {
+  color: var(--region-color);
+}
+
+.grid-cell-empty {
+  background: #16213e;
+  border: 2px solid #333;
 }
 
 .grid-cell.active {
@@ -399,6 +464,17 @@ body {
 
 .form-group input::placeholder {
   color: #555;
+}
+
+.builtin-hint {
+  display: block;
+  font-size: 0.8rem;
+  color: #4ECDC4;
+  margin-top: 0.3rem;
+}
+
+.builtin-hint[hidden] {
+  display: none;
 }
 
 .form-divider {

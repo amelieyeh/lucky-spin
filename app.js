@@ -32,6 +32,18 @@ const MAP_NAMES_ZH = {
   Thailand: "泰國",
 };
 
+// --- Region colors (8 regions of Japan) ---
+const REGION_COLORS = {
+  hokkaido: "#2D4A7A",
+  tohoku:   "#1E97A0",
+  kanto:    "#4CAF50",
+  chubu:    "#FDB813",
+  kinki:    "#F57C00",
+  chugoku:  "#E53935",
+  shikoku:  "#8E24AA",
+  kyushu:   "#5C2D91",
+};
+
 // --- Preset spins ---
 const presetSpins = [
   {
@@ -75,6 +87,12 @@ const TRAIN_ICON_SVG = `<svg viewBox="0 0 100 120" class="train-icon">
   <rect x="10" y="98" width="80" height="3" rx="1" fill="#888"/>
 </svg>`;
 
+// --- Japan flag SVG icon ---
+const JAPAN_ICON_SVG = `<svg viewBox="0 0 100 70" class="flag-icon">
+  <rect width="100" height="70" rx="6" fill="#FFF"/>
+  <circle cx="50" cy="35" r="16" fill="#BC002D"/>
+</svg>`;
+
 // --- Tokyo Tower SVG icon ---
 const TOKYO_ICON_SVG = `<svg viewBox="0 0 100 120" class="tokyo-icon">
   <!-- Tower body -->
@@ -95,6 +113,32 @@ const TOKYO_ICON_SVG = `<svg viewBox="0 0 100 120" class="tokyo-icon">
   <!-- Ground -->
   <line x1="15" y1="108" x2="85" y2="108" stroke="#888" stroke-width="2"/>
 </svg>`;
+
+const MAP_ICONS = { Japan: JAPAN_ICON_SVG, Tokyo23: TOKYO_ICON_SVG, Taiwan: TRAIN_ICON_SVG };
+
+function getMapIcon(map, count) {
+  return MAP_ICONS[map] || `<span class="custom-icon">${count}</span>`;
+}
+
+// --- Custom spin storage ---
+
+function getSavedSpins() {
+  try { return JSON.parse(localStorage.getItem("customSpins") || "[]"); }
+  catch { return []; }
+}
+
+function saveCustomSpin(data) {
+  const spins = getSavedSpins();
+  data._id = Date.now();
+  spins.push(data);
+  localStorage.setItem("customSpins", JSON.stringify(spins));
+}
+
+function deleteCustomSpin(id) {
+  const spins = getSavedSpins().filter((s) => s._id !== id);
+  localStorage.setItem("customSpins", JSON.stringify(spins));
+  renderHomeCards();
+}
 
 // --- Init ---
 
@@ -128,6 +172,25 @@ function renderHomeCards() {
       <div class="card-label">${label}</div>
     `;
     card.addEventListener("click", () => loadPreset(spin));
+    homeCards.appendChild(card);
+  });
+
+  // Saved custom spins
+  getSavedSpins().forEach((spin) => {
+    const card = document.createElement("div");
+    card.className = "home-card home-card-custom";
+    const mapZh = spin.map ? (MAP_NAMES_ZH[spin.map] || spin.map) : "";
+    const label = mapZh ? `${spin.title} - ${mapZh}` : spin.title;
+    card.innerHTML = `
+      <button class="card-delete" title="Delete">&times;</button>
+      <div class="card-icon">${getMapIcon(spin.map, spin.items.length)}</div>
+      <div class="card-label">${label}</div>
+    `;
+    card.querySelector(".card-delete").addEventListener("click", (e) => {
+      e.stopPropagation();
+      deleteCustomSpin(spin._id);
+    });
+    card.addEventListener("click", () => enterSpin(spin));
     homeCards.appendChild(card);
   });
 
@@ -170,6 +233,7 @@ function goHome() {
   modal.classList.remove("visible");
   wheelData = null;
   spinning = false;
+  renderHomeCards();
 }
 
 // --- Create flow ---
@@ -178,7 +242,27 @@ function setupCreateForm() {
   const fileInput = document.getElementById("createFileInput");
   const fileName = document.getElementById("createFileName");
   const submitBtn = document.getElementById("createSubmit");
+  const mapSelect = document.getElementById("createMap");
+  const builtinHint = document.getElementById("builtinHint");
+  const jsonSection = document.getElementById("jsonFileSection");
   let importedJson = null;
+
+  function updateFormState() {
+    const region = mapSelect.value;
+    const hasBuiltin = !!BUILTIN_REGIONS[region];
+    if (hasBuiltin) {
+      builtinHint.textContent = `${BUILTIN_REGIONS[region].items.length} items will be auto-loaded`;
+      builtinHint.hidden = false;
+      jsonSection.hidden = true;
+      submitBtn.disabled = false;
+    } else {
+      builtinHint.hidden = true;
+      jsonSection.hidden = false;
+      submitBtn.disabled = !importedJson;
+    }
+  }
+
+  mapSelect.addEventListener("change", updateFormState);
 
   fileInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
@@ -193,25 +277,32 @@ function setupCreateForm() {
   });
 
   submitBtn.addEventListener("click", () => {
-    if (!importedJson) return;
+    const map = mapSelect.value;
+    const builtin = BUILTIN_REGIONS[map];
 
-    const title = document.getElementById("createTitle").value || importedJson.title || "My Spin";
-    const description = document.getElementById("createDescription").value || importedJson.description || "";
-    const origin = document.getElementById("createOrigin").value || importedJson.origin || "";
-    const map = document.getElementById("createMap").value || importedJson.map || "";
+    if (!builtin && !importedJson) return;
+
+    const baseJson = importedJson || {};
+    const builtinItems = builtin ? builtin.items : [];
+
+    const title = document.getElementById("createTitle").value || baseJson.title || "My Spin";
+    const description = document.getElementById("createDescription").value || baseJson.description || "";
+    const origin = document.getElementById("createOrigin").value || baseJson.origin || "";
     const searchSuffix = document.getElementById("createSearchSuffix").value;
-    const spinText = document.getElementById("createSpinText").value || importedJson.spinText || "Spin!";
+    const spinText = document.getElementById("createSpinText").value || baseJson.spinText || "Spin!";
 
     const data = {
-      ...importedJson,
+      ...baseJson,
       title,
       description,
       origin,
       map,
-      searchSuffix: searchSuffix !== "" ? searchSuffix : (importedJson.searchSuffix || ""),
+      searchSuffix: searchSuffix !== "" ? searchSuffix : (builtin ? builtin.searchSuffix : (baseJson.searchSuffix || "")),
       spinText,
+      items: baseJson.items || builtinItems,
     };
 
+    saveCustomSpin(data);
     createModal.classList.remove("visible");
     enterSpin(data);
   });
@@ -228,9 +319,106 @@ function openCreateModal() {
   document.getElementById("createFileName").textContent = "";
   document.getElementById("createSubmit").disabled = true;
   document.getElementById("createFileInput").value = "";
+  document.getElementById("builtinHint").hidden = true;
+  document.getElementById("jsonFileSection").hidden = false;
 
   createModal.classList.add("visible");
 }
+
+// --- Built-in region data ---
+const BUILTIN_REGIONS = {
+  Tokyo23: {
+    searchSuffix: " 東京",
+    items: [
+      { label: "千代田区", color: "#FF6B6B" },
+      { label: "中央区", color: "#E55D87" },
+      { label: "港区", color: "#C94C7C" },
+      { label: "新宿区", color: "#45B7D1" },
+      { label: "文京区", color: "#3A9FBD" },
+      { label: "台東区", color: "#2F87A9" },
+      { label: "墨田区", color: "#A855F7" },
+      { label: "江東区", color: "#9333EA" },
+      { label: "品川区", color: "#FF8C42" },
+      { label: "目黒区", color: "#EE7832" },
+      { label: "大田区", color: "#DD6422" },
+      { label: "世田谷区", color: "#6BCB77" },
+      { label: "渋谷区", color: "#5AB866" },
+      { label: "中野区", color: "#49A555" },
+      { label: "杉並区", color: "#389244" },
+      { label: "豊島区", color: "#FFD93D" },
+      { label: "北区", color: "#F0C929" },
+      { label: "荒川区", color: "#E0B915" },
+      { label: "板橋区", color: "#00B4D8" },
+      { label: "練馬区", color: "#0096C7" },
+      { label: "足立区", color: "#FF4757" },
+      { label: "葛飾区", color: "#EE3647" },
+      { label: "江戸川区", color: "#1DD1A1" },
+    ],
+  },
+  Japan: {
+    searchSuffix: "",
+    items: [
+      // 0: Hokkaido
+      { label: "北海道", color: "#4ECDC4", region: "hokkaido" },
+      // 1-5: Tohoku
+      { label: "青森県", color: "#45B7D1", region: "tohoku" },
+      { label: "秋田県", color: "#247595", region: "tohoku" },
+      { label: "岩手県", color: "#3A9FBD", region: "tohoku" },
+      { label: "山形県", color: "#196381", region: "tohoku" },
+      { label: "宮城県", color: "#2F87A9", region: "tohoku" },
+      // 6-9: Chubu (north) + Tohoku
+      { label: "新潟県", color: "#FFD93D", region: "chubu" },
+      { label: "群馬県", color: "#49A555", region: "kanto" },
+      { label: "栃木県", color: "#5AB866", region: "kanto" },
+      { label: "福島県", color: "#0E516D", region: "tohoku" },
+      // 10-14: Chubu + Kanto
+      { label: "富山県", color: "#F0C929", region: "chubu" },
+      { label: "長野県", color: "#EE7832", region: "chubu" },
+      { label: "埼玉県", color: "#389244", region: "kanto" },
+      { label: "茨城県", color: "#6BCB77", region: "kanto" },
+      { label: "千葉県", color: "#277F33", region: "kanto" },
+      // 15-19: Chubu + Kanto
+      { label: "石川県", color: "#E0B915", region: "chubu" },
+      { label: "岐阜県", color: "#DD6422", region: "chubu" },
+      { label: "山梨県", color: "#FF8C42", region: "kanto" },
+      { label: "東京都", color: "#FF4757", region: "kanto" },
+      { label: "神奈川県", color: "#EE3647", region: "kanto" },
+      // 20-23: Chubu (south)
+      { label: "福井県", color: "#D0A901", region: "chubu" },
+      { label: "滋賀県", color: "#9333EA", region: "kinki" },
+      { label: "愛知県", color: "#BB3C02", region: "chubu" },
+      { label: "静岡県", color: "#CC5012", region: "chubu" },
+      // 24-27: Kinki
+      { label: "京都府", color: "#7E22CE", region: "kinki" },
+      { label: "大阪府", color: "#6B21A8", region: "kinki" },
+      { label: "三重県", color: "#A855F7", region: "kinki" },
+      { label: "奈良県", color: "#F093FB", region: "kinki" },
+      // 28-30: Chugoku + Kinki
+      { label: "島根県", color: "#E55D87", region: "chugoku" },
+      { label: "鳥取県", color: "#FF6B6B", region: "chugoku" },
+      { label: "兵庫県", color: "#581C87", region: "kinki" },
+      // 31-34: Chugoku + Kinki
+      { label: "山口県", color: "#912A66", region: "chugoku" },
+      { label: "広島県", color: "#AD3B71", region: "chugoku" },
+      { label: "岡山県", color: "#C94C7C", region: "chugoku" },
+      { label: "和歌山県", color: "#E070F0", region: "kinki" },
+      // 35-38: Shikoku
+      { label: "愛媛県", color: "#0077B6", region: "shikoku" },
+      { label: "香川県", color: "#0096C7", region: "shikoku" },
+      { label: "徳島県", color: "#00B4D8", region: "shikoku" },
+      { label: "高知県", color: "#005A8D", region: "shikoku" },
+      // 39-46: Kyushu + Okinawa
+      { label: "福岡県", color: "#F5576C", region: "kyushu" },
+      { label: "大分県", color: "#C10B24", region: "kyushu" },
+      { label: "佐賀県", color: "#E8445A", region: "kyushu" },
+      { label: "長崎県", color: "#DB3148", region: "kyushu" },
+      { label: "熊本県", color: "#CE1E36", region: "kyushu" },
+      { label: "宮崎県", color: "#1DD1A1", region: "kyushu" },
+      { label: "鹿児島県", color: "#17B08A", region: "kyushu" },
+      { label: "沖縄県", color: "#118F73", region: "kyushu" },
+    ],
+  },
+};
 
 // --- Shape maps ---
 
@@ -243,6 +431,60 @@ const SHAPE_MAPS = {
       [1, 12],  [0, 13],  [0, 13],  [0, 13],  [1, 12],  [1, 12],
       [2, 11],  [2, 11],  [2, 10],  [3, 9],   [3, 8],   [4, 7],
       [4, 5],   [5, 4],   [6, 2],   [6, 2],
+    ],
+  },
+  Japan: {
+    cols: 9,
+    totalRows: 17,
+    // Each: [col, row]
+    positions: [
+      [8, 0],   // 0:  北海道
+      [7, 1],   // 1:  青森
+      [6, 2],   // 2:  秋田
+      [7, 2],   // 3:  岩手
+      [6, 3],   // 4:  山形
+      [7, 3],   // 5:  宮城
+      [5, 4],   // 6:  新潟
+      [6, 5],   // 7:  群馬
+      [7, 5],   // 8:  栃木
+      [7, 4],   // 9:  福島
+      [4, 5],   // 10: 富山
+      [5, 5],   // 11: 長野
+      [6, 6],   // 12: 埼玉
+      [8, 5],   // 13: 茨城
+      [8, 6],   // 14: 千葉
+      [3, 6],   // 15: 石川
+      [4, 6],   // 16: 岐阜
+      [5, 6],   // 17: 山梨
+      [7, 6],   // 18: 東京
+      [7, 7],   // 19: 神奈川
+      [3, 7],   // 20: 福井
+      [4, 7],   // 21: 滋賀
+      [5, 7],   // 22: 愛知
+      [6, 7],   // 23: 静岡
+      [4, 8],   // 24: 京都
+      [5, 8],   // 25: 大阪
+      [6, 8],   // 26: 三重
+      [6, 9],   // 27: 奈良
+      [2, 8],   // 28: 島根
+      [3, 8],   // 29: 鳥取
+      [5, 9],   // 30: 兵庫
+      [2, 9],   // 31: 山口
+      [3, 9],   // 32: 広島
+      [4, 9],   // 33: 岡山
+      [7, 9],   // 34: 和歌山
+      [3, 10],  // 35: 愛媛
+      [4, 10],  // 36: 香川
+      [6, 10],  // 37: 徳島
+      [4, 11],  // 38: 高知
+      [0, 12],  // 39: 福岡
+      [1, 12],  // 40: 大分
+      [0, 13],  // 41: 佐賀
+      [0, 14],  // 42: 長崎
+      [1, 14],  // 43: 熊本
+      [2, 14],  // 44: 宮崎
+      [1, 15],  // 45: 鹿児島
+      [7, 16],  // 46: 沖縄
     ],
   },
   Tokyo23: {
@@ -261,26 +503,69 @@ const SHAPE_MAPS = {
 
 function renderGrid() {
   gridContainer.innerHTML = "";
+  gridContainer.classList.remove("grid-plain", "grid-shaped", "grid-map");
+  gridContainer.style.gridTemplateColumns = "";
+  gridContainer.style.gridTemplateRows = "";
   const mapKey = wheelData.map || "";
   const shape = SHAPE_MAPS[mapKey];
-  if (shape) { renderShapedGrid(shape); } else { renderPlainGrid(); }
+  if (shape && shape.type === "map") { renderMapLayout(shape); }
+  else if (shape) { renderShapedGrid(shape); }
+  else { renderPlainGrid(); }
 }
 
 function renderShapedGrid(shape) {
   gridContainer.classList.remove("grid-plain");
   gridContainer.classList.add("grid-shaped");
   gridContainer.style.gridTemplateColumns = `repeat(${shape.cols}, 1fr)`;
-  gridContainer.style.gridTemplateRows = `repeat(${shape.rows.length}, 1fr)`;
-  let itemIdx = 0;
-  shape.rows.forEach((rowDef, row) => {
-    const [startCol, count] = rowDef;
-    for (let c = 0; c < count && itemIdx < displayItems.length; c++) {
-      const cell = createCell(displayItems[itemIdx], itemIdx);
-      cell.style.gridRow = row + 1;
-      cell.style.gridColumn = startCol + c + 1;
+
+  if (shape.positions) {
+    gridContainer.style.gridTemplateRows = `repeat(${shape.totalRows}, 1fr)`;
+    // Render item cells at explicit positions
+    shape.positions.forEach((pos, i) => {
+      if (i >= displayItems.length) return;
+      const [col, row, colSpan, rowSpan] = pos;
+      const cell = createCell(displayItems[i], i);
+      cell.style.gridColumn = `${col + 1} / span ${colSpan || 1}`;
+      cell.style.gridRow = `${row + 1} / span ${rowSpan || 1}`;
       gridContainer.appendChild(cell);
-      itemIdx++;
-    }
+    });
+    // Render empty spacer cells
+    (shape.emptyPositions || []).forEach((pos) => {
+      const [col, row, colSpan, rowSpan] = pos;
+      const spacer = document.createElement("div");
+      spacer.className = "grid-cell grid-cell-empty";
+      spacer.style.gridColumn = `${col + 1} / span ${colSpan || 1}`;
+      spacer.style.gridRow = `${row + 1} / span ${rowSpan || 1}`;
+      gridContainer.appendChild(spacer);
+    });
+  } else {
+    gridContainer.style.gridTemplateRows = `repeat(${shape.rows.length}, 1fr)`;
+    let itemIdx = 0;
+    shape.rows.forEach((rowDef, row) => {
+      const [startCol, count] = rowDef;
+      for (let c = 0; c < count && itemIdx < displayItems.length; c++) {
+        const cell = createCell(displayItems[itemIdx], itemIdx);
+        cell.style.gridRow = row + 1;
+        cell.style.gridColumn = startCol + c + 1;
+        gridContainer.appendChild(cell);
+        itemIdx++;
+      }
+    });
+  }
+}
+
+function renderMapLayout(shape) {
+  gridContainer.classList.add("grid-map");
+  shape.layout.forEach((pos, i) => {
+    if (i >= displayItems.length) return;
+    const [x, y, w, h, clipPath] = pos;
+    const cell = createCell(displayItems[i], i);
+    cell.style.left = x + "%";
+    cell.style.top = y + "%";
+    cell.style.width = w + "%";
+    cell.style.height = h + "%";
+    if (clipPath) cell.style.clipPath = clipPath;
+    gridContainer.appendChild(cell);
   });
 }
 
@@ -297,6 +582,10 @@ function createCell(item, index) {
   cell.className = "grid-cell";
   cell.dataset.index = index;
   cell.style.setProperty("--cell-color", item.color);
+  if (item.region && REGION_COLORS[item.region]) {
+    cell.style.setProperty("--region-color", REGION_COLORS[item.region]);
+    cell.classList.add("grid-cell-region");
+  }
   cell.innerHTML = `<span class="grid-label">${item.label}</span>`;
   return cell;
 }

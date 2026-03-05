@@ -57,7 +57,9 @@
             <option value="">None (plain grid)</option>
             <option value="Taiwan">Taiwan / 台灣</option>
             <option value="Tokyo23">Tokyo 23区 / 東京</option>
+            <option value="Japan">Japan / 日本 (47都道府県)</option>
           </select>
+          <span class="builtin-hint" id="builtinHint" hidden></span>
         </div>
         <div class="form-group">
           <label for="createSearchSuffix">Maps search suffix</label>
@@ -67,14 +69,16 @@
           <label for="createSpinText">Spin button text</label>
           <input type="text" id="createSpinText" placeholder="Spin!">
         </div>
-        <div class="form-divider"></div>
-        <div class="form-group">
-          <label>JSON Data File</label>
-          <label class="import-btn-lg">
-            Choose JSON file...
-            <input type="file" id="createFileInput" accept=".json" hidden>
-          </label>
-          <span class="file-name" id="createFileName"></span>
+        <div id="jsonFileSection">
+          <div class="form-divider"></div>
+          <div class="form-group">
+            <label>JSON Data File</label>
+            <label class="import-btn-lg">
+              Choose JSON file...
+              <input type="file" id="createFileInput" accept=".json" hidden>
+            </label>
+            <span class="file-name" id="createFileName"></span>
+          </div>
         </div>
         <button id="createSubmit" class="spin-btn create-submit" disabled>Load Spin</button>
       </div>
