@@ -35,38 +35,127 @@ body {
   min-height: 1.5em;
 }
 
-.controls {
+/* --- Home screen --- */
+
+.home-screen {
   display: flex;
-  gap: 0.75rem;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
+  min-height: 80vh;
+}
+
+.home-subtitle {
+  color: #888;
+  margin-bottom: 2.5rem;
+  font-size: 1.1rem;
+}
+
+.home-cards {
+  display: flex;
+  gap: 1.5rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
-.controls select {
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: 1px solid #333;
+.home-card {
+  width: 220px;
+  height: 260px;
   background: #16213e;
-  color: #eee;
-  font-size: 0.95rem;
+  border: 2px solid #333;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
   cursor: pointer;
-  min-width: 200px;
+  transition: all 0.2s ease;
 }
 
-.import-btn {
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+.home-card:hover {
+  border-color: #f5576c;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(245, 87, 108, 0.15);
+}
+
+.card-icon {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.train-icon {
+  width: 90px;
+  height: 108px;
+}
+
+.card-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #eee;
+}
+
+.home-card-create {
+  border-style: dashed;
+  border-color: #555;
+}
+
+.home-card-create:hover {
+  border-color: #f093fb;
+  box-shadow: 0 8px 30px rgba(240, 147, 251, 0.15);
+}
+
+.create-plus {
+  font-size: 3rem;
+  color: #555;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.home-card-create:hover .create-plus {
+  color: #f093fb;
+}
+
+/* --- Spin screen --- */
+
+.spin-screen {
+  padding-top: 1rem;
+}
+
+.spin-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.back-btn {
+  position: absolute;
+  left: 0;
+  background: none;
   border: 1px solid #555;
-  background: #0f3460;
-  color: #eee;
-  font-size: 0.95rem;
+  color: #aaa;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s;
+  font-size: 0.9rem;
+  transition: all 0.2s;
 }
 
-.import-btn:hover {
-  background: #1a4a7a;
+.back-btn:hover {
+  border-color: #eee;
+  color: #eee;
+}
+
+.spin-title {
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* --- Grid cells --- */
@@ -120,34 +209,6 @@ body {
 .grid-cell.active .grid-label {
   color: #fff;
   text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-}
-
-/* --- Wheel (hidden) --- */
-
-.wheel-wrapper {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 1.5rem;
-}
-
-.arrow {
-  position: absolute;
-  top: -18px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 14px solid transparent;
-  border-right: 14px solid transparent;
-  border-top: 28px solid #f5576c;
-  z-index: 10;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
-}
-
-canvas {
-  display: block;
-  max-width: 100%;
-  height: auto;
 }
 
 /* --- Spin button --- */
@@ -233,6 +294,8 @@ canvas {
   color: #fff;
 }
 
+/* Result modal */
+
 .modal-body .result-origin {
   font-size: 1rem;
   color: #aaa;
@@ -283,6 +346,87 @@ canvas {
   text-decoration: underline;
 }
 
+/* --- Create modal --- */
+
+.create-modal {
+  border-color: #f093fb;
+  max-width: 450px;
+  text-align: left;
+}
+
+.create-title {
+  text-align: center;
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  color: #f093fb;
+}
+
+.create-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #0f1a30;
+  color: #eee;
+  font-size: 0.95rem;
+}
+
+.form-group input::placeholder {
+  color: #555;
+}
+
+.form-divider {
+  border-top: 1px solid #333;
+  margin: 0.5rem 0;
+}
+
+.import-btn-lg {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px dashed #555;
+  background: #0f3460;
+  color: #aaa;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.import-btn-lg:hover {
+  border-color: #f093fb;
+  color: #eee;
+}
+
+.file-name {
+  font-size: 0.8rem;
+  color: #4ECDC4;
+  margin-top: 0.3rem;
+}
+
+.create-submit {
+  align-self: center;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
 @keyframes pop-in {
   0% { transform: scale(0.8); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
@@ -293,4 +437,7 @@ canvas {
   .title { font-size: 1.8rem; }
   .grid-container { gap: 2px; max-width: 100%; }
   .grid-cell .grid-label { font-size: 0.55rem; }
+  .home-card { width: 160px; height: 200px; }
+  .card-icon { width: 70px; height: 70px; }
+  .train-icon { width: 65px; height: 78px; }
 }

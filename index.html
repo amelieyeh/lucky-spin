@@ -7,38 +7,72 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
+  <!-- Home screen -->
+  <div id="homeScreen" class="container home-screen">
     <h1 class="title">Lucky Spin</h1>
-    <p class="description" id="description"></p>
-
-    <div class="controls">
-      <select id="dataSelect">
-        <option value="">-- Select data --</option>
-      </select>
-      <label class="import-btn">
-        Import JSON
-        <input type="file" id="fileInput" accept=".json" hidden>
-      </label>
-    </div>
-
-    <button id="spinBtn" class="spin-btn" disabled>Spin!</button>
-
-    <!-- Grid mode -->
-    <div id="gridContainer" class="grid-container"></div>
-
-    <!-- Wheel mode (hidden, preserved for future use) -->
-    <!--
-    <div class="wheel-wrapper">
-      <div class="arrow"></div>
-      <canvas id="wheelCanvas" width="500" height="500"></canvas>
-    </div>
-    -->
+    <p class="home-subtitle">Pick a spin or create your own</p>
+    <div class="home-cards" id="homeCards"></div>
   </div>
 
+  <!-- Spin screen -->
+  <div id="spinScreen" class="container spin-screen" hidden>
+    <header class="spin-header">
+      <button id="backBtn" class="back-btn">&larr; Back</button>
+      <h2 class="spin-title" id="spinTitle"></h2>
+    </header>
+    <p class="description" id="description"></p>
+    <button id="spinBtn" class="spin-btn" disabled>Spin!</button>
+    <div id="gridContainer" class="grid-container"></div>
+  </div>
+
+  <!-- Result modal -->
   <div id="resultModal" class="modal-overlay">
     <div class="modal">
       <button class="modal-close" id="modalClose">&times;</button>
       <div id="modalBody" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Create modal -->
+  <div id="createModal" class="modal-overlay">
+    <div class="modal create-modal">
+      <button class="modal-close" id="createModalClose">&times;</button>
+      <h3 class="create-title">Create New Spin</h3>
+      <div class="create-form">
+        <div class="form-group">
+          <label for="createTitle">Title</label>
+          <input type="text" id="createTitle" placeholder="e.g. Lunch Roulette">
+        </div>
+        <div class="form-group">
+          <label for="createDescription">Description</label>
+          <input type="text" id="createDescription" placeholder="e.g. Where to eat today?">
+        </div>
+        <div class="form-group">
+          <label for="createOrigin">Origin (optional)</label>
+          <input type="text" id="createOrigin" placeholder="e.g. Starting point">
+        </div>
+        <div class="form-group">
+          <label for="createMap">Region / Country</label>
+          <select id="createMap">
+            <option value="">None (plain grid)</option>
+            <option value="Taiwan">Taiwan / 台灣</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="createSpinText">Spin button text</label>
+          <input type="text" id="createSpinText" placeholder="Spin!">
+        </div>
+        <div class="form-divider"></div>
+        <div class="form-group">
+          <label>JSON Data File</label>
+          <label class="import-btn-lg">
+            Choose JSON file...
+            <input type="file" id="createFileInput" accept=".json" hidden>
+          </label>
+          <span class="file-name" id="createFileName"></span>
+        </div>
+        <button id="createSubmit" class="spin-btn create-submit" disabled>Load Spin</button>
+      </div>
     </div>
   </div>
 
