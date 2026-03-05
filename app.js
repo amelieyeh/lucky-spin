@@ -13,7 +13,7 @@ let displayItems = [];
 
 // Available JSON files in data/ directory
 const availableFiles = [
-  { name: "Taiwan Railway Stations", file: "data/taiwan-railway.json" },
+  { name: "電車吃漢", file: "data/taiwan-railway.json" },
 ];
 
 // --- Init ---
