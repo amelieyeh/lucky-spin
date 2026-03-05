@@ -212,8 +212,8 @@ function showResult(index) {
   const city = selected.city ? `<div class="result-city">${selected.city}</div>` : "";
   const stationName = `${selected.label}車站`;
   const mapQuery = encodeURIComponent(stationName);
-  const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
-  const mapLinkUrl = `https://www.google.com/maps/search/${mapQuery}`;
+  const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&hl=zh-TW&output=embed`;
+  const mapLinkUrl = `https://www.google.com/maps/search/${mapQuery}?hl=zh-TW`;
 
   const originHtml = origin ? `<div class="result-origin">From ${origin}</div>` : "";
 
@@ -226,7 +226,7 @@ function showResult(index) {
       <a href="${mapLinkUrl}" target="_blank" rel="noopener">
         <iframe src="${mapEmbedUrl}" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </a>
-      <a href="${mapLinkUrl}" target="_blank" rel="noopener" class="map-link">Open in Google Maps</a>
+      <a href="${mapLinkUrl}" target="_blank" rel="noopener" class="map-link">在 Google Maps 中開啟</a>
     </div>
   `;
   modal.classList.add("visible");
