@@ -3,57 +3,1195 @@
   "description": "從板橋出發，轉到哪就去哪！",
   "origin": "板橋",
   "items": [
-    { "label": "基隆", "city": "基隆市", "color": "#FF6B6B" },
-    { "label": "三坑", "city": "基隆市", "color": "#E55D87" },
-    { "label": "八堵", "city": "基隆市", "color": "#C94C7C" },
-    { "label": "七堵", "city": "基隆市", "color": "#AB3D71" },
-    { "label": "百福", "city": "基隆市", "color": "#8E2E66" },
-    { "label": "汐止", "city": "新北市", "color": "#4ECDC4" },
-    { "label": "汐科", "city": "新北市", "color": "#3CB8AF" },
-    { "label": "南港", "city": "台北市", "color": "#2AA39A" },
-    { "label": "松山", "city": "台北市", "color": "#45B7D1" },
-    { "label": "台北", "city": "台北市", "color": "#3A9FBD" },
-    { "label": "萬華", "city": "台北市", "color": "#2F87A9" },
-    { "label": "浮洲", "city": "新北市", "color": "#FF9A76" },
-    { "label": "樹林", "city": "新北市", "color": "#F08060" },
-    { "label": "南樹林", "city": "新北市", "color": "#E1664A" },
-    { "label": "山佳", "city": "新北市", "color": "#D24C34" },
-    { "label": "鶯歌", "city": "新北市", "color": "#A855F7" },
-    { "label": "桃園", "city": "桃園市", "color": "#9333EA" },
-    { "label": "內壢", "city": "桃園市", "color": "#7E22CE" },
-    { "label": "中壢", "city": "桃園市", "color": "#6B21A8" },
-    { "label": "埔心", "city": "桃園市", "color": "#FFD93D" },
-    { "label": "楊梅", "city": "桃園市", "color": "#F0C929" },
-    { "label": "富岡", "city": "桃園市", "color": "#E0B915" },
-    { "label": "新富", "city": "桃園市", "color": "#D1AA01" },
-    { "label": "北湖", "city": "新竹縣", "color": "#6BCB77" },
-    { "label": "湖口", "city": "新竹縣", "color": "#5AB866" },
-    { "label": "新豐", "city": "新竹縣", "color": "#49A555" },
-    { "label": "竹北", "city": "新竹縣", "color": "#389244" },
-    { "label": "新竹", "city": "新竹市", "color": "#FF6F61" },
-    { "label": "竹中", "city": "新竹縣", "color": "#EE5A50" },
-    { "label": "竹東", "city": "新竹縣", "color": "#DD453F" },
-    { "label": "苗栗", "city": "苗栗縣", "color": "#00B4D8" },
-    { "label": "豐富", "city": "苗栗縣", "color": "#0096C7" },
-    { "label": "台中", "city": "台中市", "color": "#FF8C42" },
-    { "label": "新烏日", "city": "台中市", "color": "#EE7832" },
-    { "label": "彰化", "city": "彰化縣", "color": "#DD6422" },
-    { "label": "員林", "city": "彰化縣", "color": "#CC5012" },
-    { "label": "田中", "city": "彰化縣", "color": "#7B68EE" },
-    { "label": "二水", "city": "彰化縣", "color": "#6A57DD" },
-    { "label": "斗六", "city": "雲林縣", "color": "#5946CC" },
-    { "label": "嘉義", "city": "嘉義市", "color": "#20B2AA" },
-    { "label": "新營", "city": "台南市", "color": "#1AA09A" },
-    { "label": "台南", "city": "台南市", "color": "#F7B731" },
-    { "label": "左營", "city": "高雄市", "color": "#E8A521" },
-    { "label": "高雄", "city": "高雄市", "color": "#FF4757" },
-    { "label": "屏東", "city": "屏東縣", "color": "#EE3647" },
-    { "label": "潮州", "city": "屏東縣", "color": "#DD2537" },
-    { "label": "枋寮", "city": "屏東縣", "color": "#CC1427" },
-    { "label": "台東", "city": "台東縣", "color": "#1DD1A1" },
-    { "label": "花蓮", "city": "花蓮縣", "color": "#10C090" },
-    { "label": "宜蘭", "city": "宜蘭縣", "color": "#03AF7F" },
-    { "label": "礁溪", "city": "宜蘭縣", "color": "#FF9FF3" },
-    { "label": "瑞芳", "city": "新北市", "color": "#EE8EE2" }
+    {
+      "label": "基隆",
+      "city": "基隆市",
+      "color": "#FF6B6B"
+    },
+    {
+      "label": "三坑",
+      "city": "基隆市",
+      "color": "#FF6B6B"
+    },
+    {
+      "label": "八堵",
+      "city": "基隆市",
+      "color": "#FF6B6B"
+    },
+    {
+      "label": "七堵",
+      "city": "基隆市",
+      "color": "#FF6B6B"
+    },
+    {
+      "label": "百福",
+      "city": "基隆市",
+      "color": "#FF6B6B"
+    },
+    {
+      "label": "五堵",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "汐止",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "汐科",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "南港",
+      "city": "台北市",
+      "color": "#45B7D1"
+    },
+    {
+      "label": "松山",
+      "city": "台北市",
+      "color": "#45B7D1"
+    },
+    {
+      "label": "台北",
+      "city": "台北市",
+      "color": "#45B7D1"
+    },
+    {
+      "label": "萬華",
+      "city": "台北市",
+      "color": "#45B7D1"
+    },
+    {
+      "label": "浮洲",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "樹林",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "南樹林",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "山佳",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "鶯歌",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "桃園",
+      "city": "桃園市",
+      "color": "#A855F7"
+    },
+    {
+      "label": "內壢",
+      "city": "桃園市",
+      "color": "#A855F7"
+    },
+    {
+      "label": "中壢",
+      "city": "桃園市",
+      "color": "#A855F7"
+    },
+    {
+      "label": "埔心",
+      "city": "桃園市",
+      "color": "#A855F7"
+    },
+    {
+      "label": "楊梅",
+      "city": "桃園市",
+      "color": "#A855F7"
+    },
+    {
+      "label": "富岡",
+      "city": "桃園市",
+      "color": "#A855F7"
+    },
+    {
+      "label": "新富",
+      "city": "桃園市",
+      "color": "#A855F7"
+    },
+    {
+      "label": "北湖",
+      "city": "新竹縣",
+      "color": "#6BCB77"
+    },
+    {
+      "label": "湖口",
+      "city": "新竹縣",
+      "color": "#6BCB77"
+    },
+    {
+      "label": "新豐",
+      "city": "新竹縣",
+      "color": "#6BCB77"
+    },
+    {
+      "label": "竹北",
+      "city": "新竹縣",
+      "color": "#6BCB77"
+    },
+    {
+      "label": "北新竹",
+      "city": "新竹市",
+      "color": "#FF6F61"
+    },
+    {
+      "label": "新竹",
+      "city": "新竹市",
+      "color": "#FF6F61"
+    },
+    {
+      "label": "三姓橋",
+      "city": "新竹市",
+      "color": "#FF6F61"
+    },
+    {
+      "label": "香山",
+      "city": "新竹市",
+      "color": "#FF6F61"
+    },
+    {
+      "label": "崎頂",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "竹南",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "造橋",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "豐富",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "苗栗",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "南勢",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "銅鑼",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "三義",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "泰安",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "后里",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "豐原",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "栗林",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "潭子",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "頭家厝",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "松竹",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "太原",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "精武",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "台中",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "五權",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "大慶",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "烏日",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "新烏日",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "成功",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "談文",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "大山",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "後龍",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "龍港",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "白沙屯",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "新埔",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "通霄",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "苑裡",
+      "city": "苗栗縣",
+      "color": "#00B4D8"
+    },
+    {
+      "label": "日南",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "大甲",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "台中港",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "清水",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "沙鹿",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "龍井",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "大肚",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "追分",
+      "city": "台中市",
+      "color": "#FF8C42"
+    },
+    {
+      "label": "彰化",
+      "city": "彰化縣",
+      "color": "#DD6422"
+    },
+    {
+      "label": "花壇",
+      "city": "彰化縣",
+      "color": "#DD6422"
+    },
+    {
+      "label": "大村",
+      "city": "彰化縣",
+      "color": "#DD6422"
+    },
+    {
+      "label": "員林",
+      "city": "彰化縣",
+      "color": "#DD6422"
+    },
+    {
+      "label": "永靖",
+      "city": "彰化縣",
+      "color": "#DD6422"
+    },
+    {
+      "label": "社頭",
+      "city": "彰化縣",
+      "color": "#DD6422"
+    },
+    {
+      "label": "田中",
+      "city": "彰化縣",
+      "color": "#DD6422"
+    },
+    {
+      "label": "二水",
+      "city": "彰化縣",
+      "color": "#DD6422"
+    },
+    {
+      "label": "林內",
+      "city": "雲林縣",
+      "color": "#5946CC"
+    },
+    {
+      "label": "石榴",
+      "city": "雲林縣",
+      "color": "#5946CC"
+    },
+    {
+      "label": "斗六",
+      "city": "雲林縣",
+      "color": "#5946CC"
+    },
+    {
+      "label": "斗南",
+      "city": "雲林縣",
+      "color": "#5946CC"
+    },
+    {
+      "label": "石龜",
+      "city": "雲林縣",
+      "color": "#5946CC"
+    },
+    {
+      "label": "大林",
+      "city": "嘉義縣",
+      "color": "#1AA09A"
+    },
+    {
+      "label": "民雄",
+      "city": "嘉義縣",
+      "color": "#1AA09A"
+    },
+    {
+      "label": "嘉北",
+      "city": "嘉義市",
+      "color": "#20B2AA"
+    },
+    {
+      "label": "嘉義",
+      "city": "嘉義市",
+      "color": "#20B2AA"
+    },
+    {
+      "label": "水上",
+      "city": "嘉義縣",
+      "color": "#1AA09A"
+    },
+    {
+      "label": "南靖",
+      "city": "嘉義縣",
+      "color": "#1AA09A"
+    },
+    {
+      "label": "後壁",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "新營",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "柳營",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "林鳳營",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "隆田",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "拔林",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "善化",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "南科",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "新市",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "永康",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "大橋",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "台南",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "保安",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "仁德",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "中洲",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "大湖",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "路竹",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "岡山",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "橋頭",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "楠梓",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "新左營",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "左營",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "內惟",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "美術館",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "鼓山",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "三塊厝",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "高雄",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "民族",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "科工館",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "正義",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "鳳山",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "後庄",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "九曲堂",
+      "city": "高雄市",
+      "color": "#FF4757"
+    },
+    {
+      "label": "六塊厝",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "屏東",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "歸來",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "麟洛",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "西勢",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "竹田",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "潮州",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "崁頂",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "南州",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "鎮安",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "林邊",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "佳冬",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "東海",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "枋寮",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "加祿",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "內獅",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "枋山",
+      "city": "屏東縣",
+      "color": "#EE3647"
+    },
+    {
+      "label": "大武",
+      "city": "台東縣",
+      "color": "#1DD1A1"
+    },
+    {
+      "label": "瀧溪",
+      "city": "台東縣",
+      "color": "#1DD1A1"
+    },
+    {
+      "label": "金崙",
+      "city": "台東縣",
+      "color": "#1DD1A1"
+    },
+    {
+      "label": "太麻里",
+      "city": "台東縣",
+      "color": "#1DD1A1"
+    },
+    {
+      "label": "知本",
+      "city": "台東縣",
+      "color": "#1DD1A1"
+    },
+    {
+      "label": "康樂",
+      "city": "台東縣",
+      "color": "#1DD1A1"
+    },
+    {
+      "label": "台東",
+      "city": "台東縣",
+      "color": "#1DD1A1"
+    },
+    {
+      "label": "山里",
+      "city": "台東縣",
+      "color": "#1DD1A1"
+    },
+    {
+      "label": "鹿野",
+      "city": "台東縣",
+      "color": "#1DD1A1"
+    },
+    {
+      "label": "瑞源",
+      "city": "台東縣",
+      "color": "#1DD1A1"
+    },
+    {
+      "label": "瑞和",
+      "city": "台東縣",
+      "color": "#1DD1A1"
+    },
+    {
+      "label": "關山",
+      "city": "台東縣",
+      "color": "#1DD1A1"
+    },
+    {
+      "label": "海端",
+      "city": "台東縣",
+      "color": "#1DD1A1"
+    },
+    {
+      "label": "池上",
+      "city": "台東縣",
+      "color": "#1DD1A1"
+    },
+    {
+      "label": "富里",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "東竹",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "東里",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "玉里",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "三民",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "瑞穗",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "富源",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "大富",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "光復",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "萬榮",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "鳳林",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "林榮新光",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "南平",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "豐田",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "壽豐",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "平和",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "志學",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "吉安",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "花蓮",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "北埔",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "景美",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "新城",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "崇德",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "和仁",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "和平",
+      "city": "花蓮縣",
+      "color": "#10C090"
+    },
+    {
+      "label": "漢本",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "武塔",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "南澳",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "東澳",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "永樂",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "蘇澳新",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "蘇澳",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "新馬",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "冬山",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "羅東",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "中里",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "二結",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "宜蘭",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "四城",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "礁溪",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "頂埔",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "頭城",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "外澳",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "龜山",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "大溪",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "大里",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "石城",
+      "city": "宜蘭縣",
+      "color": "#FF9FF3"
+    },
+    {
+      "label": "福隆",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "貢寮",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "雙溪",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "牡丹",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "三貂嶺",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "猴硐",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "瑞芳",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "四腳亭",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "暖暖",
+      "city": "基隆市",
+      "color": "#FF6B6B"
+    },
+    {
+      "label": "千甲",
+      "city": "新竹市",
+      "color": "#FF6F61"
+    },
+    {
+      "label": "新莊",
+      "city": "新竹市",
+      "color": "#FF6F61"
+    },
+    {
+      "label": "竹中",
+      "city": "新竹縣",
+      "color": "#6BCB77"
+    },
+    {
+      "label": "上員",
+      "city": "新竹縣",
+      "color": "#6BCB77"
+    },
+    {
+      "label": "榮華",
+      "city": "新竹縣",
+      "color": "#6BCB77"
+    },
+    {
+      "label": "竹東",
+      "city": "新竹縣",
+      "color": "#6BCB77"
+    },
+    {
+      "label": "橫山",
+      "city": "新竹縣",
+      "color": "#6BCB77"
+    },
+    {
+      "label": "九讚頭",
+      "city": "新竹縣",
+      "color": "#6BCB77"
+    },
+    {
+      "label": "合興",
+      "city": "新竹縣",
+      "color": "#6BCB77"
+    },
+    {
+      "label": "富貴",
+      "city": "新竹縣",
+      "color": "#6BCB77"
+    },
+    {
+      "label": "內灣",
+      "city": "新竹縣",
+      "color": "#6BCB77"
+    },
+    {
+      "label": "六家",
+      "city": "新竹縣",
+      "color": "#6BCB77"
+    },
+    {
+      "label": "源泉",
+      "city": "彰化縣",
+      "color": "#DD6422"
+    },
+    {
+      "label": "濁水",
+      "city": "南投縣",
+      "color": "#7B68EE"
+    },
+    {
+      "label": "龍泉",
+      "city": "南投縣",
+      "color": "#7B68EE"
+    },
+    {
+      "label": "集集",
+      "city": "南投縣",
+      "color": "#7B68EE"
+    },
+    {
+      "label": "水里",
+      "city": "南投縣",
+      "color": "#7B68EE"
+    },
+    {
+      "label": "車埕",
+      "city": "南投縣",
+      "color": "#7B68EE"
+    },
+    {
+      "label": "長榮大學",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "沙崙",
+      "city": "台南市",
+      "color": "#F7B731"
+    },
+    {
+      "label": "大華",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "十分",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "望古",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "嶺腳",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "平溪",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "菁桐",
+      "city": "新北市",
+      "color": "#E55D87"
+    },
+    {
+      "label": "海科館",
+      "city": "基隆市",
+      "color": "#FF6B6B"
+    },
+    {
+      "label": "八斗子",
+      "city": "基隆市",
+      "color": "#FF6B6B"
+    }
   ]
 }
