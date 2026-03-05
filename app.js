@@ -1,5 +1,7 @@
 const spinBtn = document.getElementById("spinBtn");
-const resultDiv = document.getElementById("result");
+const modal = document.getElementById("resultModal");
+const modalBody = document.getElementById("modalBody");
+const modalClose = document.getElementById("modalClose");
 const dataSelect = document.getElementById("dataSelect");
 const fileInput = document.getElementById("fileInput");
 const descriptionEl = document.getElementById("description");
@@ -48,6 +50,15 @@ function init() {
   });
 
   spinBtn.addEventListener("click", startSpin);
+
+  modalClose.addEventListener("click", closeModal);
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+}
+
+function closeModal() {
+  modal.classList.remove("visible");
 }
 
 // --- Load data ---
@@ -55,7 +66,7 @@ function init() {
 function loadData(data) {
   wheelData = data;
   descriptionEl.textContent = data.description || "";
-  resultDiv.classList.remove("visible");
+  modal.classList.remove("visible");
   spinBtn.disabled = false;
   pickDisplayItems();
   renderGrid();
@@ -99,7 +110,7 @@ function startSpin() {
   spinning = true;
   spinBtn.disabled = true;
   spinBtn.classList.add("spinning");
-  resultDiv.classList.remove("visible");
+  modal.classList.remove("visible");
 
   // Re-shuffle displayed items each spin
   pickDisplayItems();
@@ -162,11 +173,26 @@ function showResult(index) {
   const selected = displayItems[index];
   const origin = wheelData.origin;
   const city = selected.city ? `<div class="result-city">${selected.city}</div>` : "";
+  const stationName = `${selected.label}車站`;
+  const mapQuery = encodeURIComponent(stationName);
+  const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
+  const mapLinkUrl = `https://www.google.com/maps/search/${mapQuery}`;
 
-  resultDiv.classList.add("visible");
-  resultDiv.innerHTML = origin
-    ? `<div class="result-origin">From ${origin}</div><div class="result-destination">${selected.label}</div>${city}<div class="result-cta">Let's go!</div>`
-    : `<div class="result-destination">${selected.label}</div>${city}`;
+  const originHtml = origin ? `<div class="result-origin">From ${origin}</div>` : "";
+
+  modalBody.innerHTML = `
+    ${originHtml}
+    <div class="result-destination">${selected.label}</div>
+    ${city}
+    <div class="result-cta">Let's go!</div>
+    <div class="result-map">
+      <a href="${mapLinkUrl}" target="_blank" rel="noopener">
+        <iframe src="${mapEmbedUrl}" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </a>
+      <a href="${mapLinkUrl}" target="_blank" rel="noopener" class="map-link">Open in Google Maps</a>
+    </div>
+  `;
+  modal.classList.add("visible");
 }
 
 // --- Wheel drawing (preserved, not currently used) ---
