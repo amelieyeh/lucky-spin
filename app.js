@@ -79,38 +79,38 @@ function pickDisplayItems() {
 
 // --- Taiwan shape map ---
 // Each row: [startCol, count] — forms the outline of Taiwan
-// 30 rows × up to 13 columns, totaling 238 cells
+// 28 rows × 13 columns, totaling 238 cells
+// East coast (right edge) stays straight at col 12 for rows 2-19
+// West coast bulges at central plains (Changhua), tapers north & south
 const TAIWAN_SHAPE = [
-  [7, 2],   // row 0  - north tip (Keelung)
-  [6, 3],   // row 1
-  [5, 6],   // row 2  - Taipei basin
-  [4, 6],   // row 3
-  [3, 7],   // row 4  - Taoyuan
-  [3, 8],   // row 5
-  [2, 9],   // row 6  - Hsinchu
-  [2, 10],  // row 7
-  [1, 11],  // row 8  - Miaoli
-  [1, 11],  // row 9
-  [0, 12],  // row 10 - Taichung (widest)
-  [0, 12],  // row 11
-  [0, 12],  // row 12
-  [0, 12],  // row 13
-  [0, 12],  // row 14 - Changhua
-  [0, 12],  // row 15
-  [1, 11],  // row 16 - Yunlin
-  [1, 10],  // row 17
-  [2, 9],   // row 18 - Chiayi
-  [2, 9],   // row 19
-  [2, 8],   // row 20 - Tainan
-  [3, 8],   // row 21
-  [3, 7],   // row 22 - Kaohsiung
-  [4, 6],   // row 23
-  [4, 6],   // row 24 - Pingtung
-  [5, 5],   // row 25
-  [5, 5],   // row 26
-  [5, 4],   // row 27 - south tip
-  [5, 3],   // row 28
-  [5, 2],   // row 29 - Eluanbi
+  [10, 2],  // row 0  - north tip (Keelung)
+  [9, 3],   // row 1
+  [8, 5],   // row 2  - Taipei
+  [7, 6],   // row 3
+  [6, 7],   // row 4  - Taoyuan
+  [5, 8],   // row 5
+  [4, 9],   // row 6  - Hsinchu
+  [3, 10],  // row 7
+  [3, 10],  // row 8  - Miaoli
+  [2, 11],  // row 9
+  [2, 11],  // row 10 - Taichung
+  [1, 12],  // row 11
+  [1, 12],  // row 12
+  [0, 13],  // row 13 - Changhua (widest)
+  [0, 13],  // row 14
+  [0, 13],  // row 15
+  [1, 12],  // row 16 - Yunlin
+  [1, 12],  // row 17
+  [2, 11],  // row 18 - Chiayi
+  [2, 11],  // row 19
+  [2, 10],  // row 20 - Tainan
+  [3, 9],   // row 21
+  [3, 8],   // row 22 - Kaohsiung
+  [4, 7],   // row 23
+  [4, 5],   // row 24 - Pingtung
+  [5, 4],   // row 25
+  [6, 2],   // row 26 - south tip
+  [6, 2],   // row 27 - Eluanbi
 ];
 
 const GRID_COLS = 13;
