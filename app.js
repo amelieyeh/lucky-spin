@@ -60,7 +60,7 @@ function loadWheel(data) {
   wheelData = data;
   descriptionEl.textContent = data.description || "";
   currentAngle = 0;
-  resultDiv.hidden = true;
+  resultDiv.classList.remove("visible");
   spinBtn.disabled = false;
   drawWheel();
 }
@@ -152,7 +152,7 @@ function spin() {
   spinning = true;
   spinBtn.disabled = true;
   spinBtn.classList.add("spinning");
-  resultDiv.hidden = true;
+  resultDiv.classList.remove("visible");
 
   const duration = 5000;
   const totalRotation = Math.PI * 2 * (8 + Math.random() * 4); // 8-12 full rotations
@@ -202,7 +202,7 @@ function showResult() {
 
   const city = selected.city ? `<div class="result-city">${selected.city}</div>` : "";
 
-  resultDiv.hidden = false;
+  resultDiv.classList.add("visible");
   resultDiv.innerHTML = origin
     ? `<div class="result-origin">From ${origin}</div><div class="result-destination">${selected.label}</div>${city}<div class="result-cta">Let's go!</div>`
     : `<div class="result-destination">${selected.label}</div>${city}`;

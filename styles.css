@@ -135,9 +135,13 @@ canvas {
   background: #16213e;
   border-radius: 12px;
   font-size: 1.3rem;
-  display: inline-block;
+  display: none;
   border: 2px solid #f5576c;
   animation: pop-in 0.4s ease;
+}
+
+.result.visible {
+  display: inline-block;
 }
 
 .result .result-origin {
