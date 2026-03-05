@@ -4,6 +4,7 @@
   "origin": "板橋",
   "spinText": "說走就走，GO!",
   "map": "Taiwan",
+  "searchSuffix": "車站",
   "items": [
     {
       "label": "基隆",

@@ -1,0 +1,33 @@
+{
+  "title": "東京散步",
+  "description": "隨機選一個區去逛逛吧！",
+  "origin": "",
+  "spinText": "今天去哪？",
+  "map": "Tokyo23",
+  "searchSuffix": " 東京",
+  "items": [
+    { "label": "千代田区", "color": "#FF6B6B" },
+    { "label": "中央区", "color": "#E55D87" },
+    { "label": "港区", "color": "#C94C7C" },
+    { "label": "新宿区", "color": "#45B7D1" },
+    { "label": "文京区", "color": "#3A9FBD" },
+    { "label": "台東区", "color": "#2F87A9" },
+    { "label": "墨田区", "color": "#A855F7" },
+    { "label": "江東区", "color": "#9333EA" },
+    { "label": "品川区", "color": "#FF8C42" },
+    { "label": "目黒区", "color": "#EE7832" },
+    { "label": "大田区", "color": "#DD6422" },
+    { "label": "世田谷区", "color": "#6BCB77" },
+    { "label": "渋谷区", "color": "#5AB866" },
+    { "label": "中野区", "color": "#49A555" },
+    { "label": "杉並区", "color": "#389244" },
+    { "label": "豊島区", "color": "#FFD93D" },
+    { "label": "北区", "color": "#F0C929" },
+    { "label": "荒川区", "color": "#E0B915" },
+    { "label": "板橋区", "color": "#00B4D8" },
+    { "label": "練馬区", "color": "#0096C7" },
+    { "label": "足立区", "color": "#FF4757" },
+    { "label": "葛飾区", "color": "#EE3647" },
+    { "label": "江戸川区", "color": "#1DD1A1" }
+  ]
+}

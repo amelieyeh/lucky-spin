@@ -20,6 +20,7 @@ let displayItems = [];
 // --- Map translations ---
 const MAP_NAMES_ZH = {
   Taiwan: "台灣",
+  Tokyo23: "東京23区",
   Japan: "日本",
   France: "法國",
   Italy: "義大利",
@@ -38,6 +39,12 @@ const presetSpins = [
     map: "Taiwan",
     file: "data/taiwan-railway.json",
     icon: "train",
+  },
+  {
+    name: "東京散步",
+    map: "Tokyo23",
+    file: "data/tokyo-23.json",
+    icon: "tokyo",
   },
 ];
 
@@ -68,6 +75,27 @@ const TRAIN_ICON_SVG = `<svg viewBox="0 0 100 120" class="train-icon">
   <rect x="10" y="98" width="80" height="3" rx="1" fill="#888"/>
 </svg>`;
 
+// --- Tokyo Tower SVG icon ---
+const TOKYO_ICON_SVG = `<svg viewBox="0 0 100 120" class="tokyo-icon">
+  <!-- Tower body -->
+  <polygon points="50,5 35,95 65,95" fill="none" stroke="#FF4757" stroke-width="3"/>
+  <!-- Cross beams -->
+  <line x1="39" y1="40" x2="61" y2="40" stroke="#FF4757" stroke-width="2"/>
+  <line x1="37" y1="55" x2="63" y2="55" stroke="#FF4757" stroke-width="2"/>
+  <line x1="36" y1="70" x2="64" y2="70" stroke="#FF4757" stroke-width="2"/>
+  <!-- Observation deck -->
+  <rect x="42" y="30" width="16" height="8" rx="2" fill="#FFF" stroke="#FF4757" stroke-width="1.5"/>
+  <!-- Antenna -->
+  <line x1="50" y1="5" x2="50" y2="0" stroke="#FF4757" stroke-width="2"/>
+  <!-- Base -->
+  <line x1="28" y1="95" x2="72" y2="95" stroke="#FF4757" stroke-width="3" stroke-linecap="round"/>
+  <!-- Legs spread -->
+  <line x1="35" y1="95" x2="25" y2="108" stroke="#FF4757" stroke-width="2.5"/>
+  <line x1="65" y1="95" x2="75" y2="108" stroke="#FF4757" stroke-width="2.5"/>
+  <!-- Ground -->
+  <line x1="15" y1="108" x2="85" y2="108" stroke="#888" stroke-width="2"/>
+</svg>`;
+
 // --- Init ---
 
 function init() {
@@ -92,10 +120,8 @@ function renderHomeCards() {
     const mapZh = MAP_NAMES_ZH[spin.map] || spin.map;
     const label = spin.map ? `${spin.name} - ${mapZh}` : spin.name;
 
-    let iconHtml = "";
-    if (spin.icon === "train") {
-      iconHtml = TRAIN_ICON_SVG;
-    }
+    const ICONS = { train: TRAIN_ICON_SVG, tokyo: TOKYO_ICON_SVG };
+    const iconHtml = ICONS[spin.icon] || "";
 
     card.innerHTML = `
       <div class="card-icon">${iconHtml}</div>
@@ -173,6 +199,7 @@ function setupCreateForm() {
     const description = document.getElementById("createDescription").value || importedJson.description || "";
     const origin = document.getElementById("createOrigin").value || importedJson.origin || "";
     const map = document.getElementById("createMap").value || importedJson.map || "";
+    const searchSuffix = document.getElementById("createSearchSuffix").value;
     const spinText = document.getElementById("createSpinText").value || importedJson.spinText || "Spin!";
 
     const data = {
@@ -181,6 +208,7 @@ function setupCreateForm() {
       description,
       origin,
       map,
+      searchSuffix: searchSuffix !== "" ? searchSuffix : (importedJson.searchSuffix || ""),
       spinText,
     };
 
@@ -196,6 +224,7 @@ function openCreateModal() {
   document.getElementById("createOrigin").value = "";
   document.getElementById("createMap").value = "";
   document.getElementById("createSpinText").value = "";
+  document.getElementById("createSearchSuffix").value = "";
   document.getElementById("createFileName").textContent = "";
   document.getElementById("createSubmit").disabled = true;
   document.getElementById("createFileInput").value = "";
@@ -214,6 +243,16 @@ const SHAPE_MAPS = {
       [1, 12],  [0, 13],  [0, 13],  [0, 13],  [1, 12],  [1, 12],
       [2, 11],  [2, 11],  [2, 10],  [3, 9],   [3, 8],   [4, 7],
       [4, 5],   [5, 4],   [6, 2],   [6, 2],
+    ],
+  },
+  Tokyo23: {
+    cols: 6,
+    rows: [
+      [1, 4],   // row 0 - Nerima, Itabashi, Kita, Adachi
+      [0, 6],   // row 1 - widest: Suginami~Katsushika
+      [0, 6],   // row 2 - Setagaya~Sumida
+      [1, 5],   // row 3 - Meguro~Koto
+      [2, 2],   // row 4 - Ota, Edogawa
     ],
   },
 };
@@ -356,8 +395,9 @@ function showResult(index) {
   const selected = displayItems[index];
   const origin = wheelData.origin;
   const city = selected.city ? `<div class="result-city">${selected.city}</div>` : "";
-  const stationName = `${selected.label}車站`;
-  const mapQuery = encodeURIComponent(stationName);
+  const suffix = wheelData.searchSuffix !== undefined ? wheelData.searchSuffix : "";
+  const searchName = `${selected.label}${suffix}`;
+  const mapQuery = encodeURIComponent(searchName);
   const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&hl=zh-TW&output=embed`;
   const mapLinkUrl = `https://www.google.com/maps/search/${mapQuery}?hl=zh-TW`;
   const originHtml = origin ? `<div class="result-origin">From ${origin}</div>` : "";

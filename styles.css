@@ -96,6 +96,11 @@ body {
   height: 108px;
 }
 
+.tokyo-icon {
+  width: 90px;
+  height: 108px;
+}
+
 .card-label {
   font-size: 1.1rem;
   font-weight: 600;
