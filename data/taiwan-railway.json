@@ -3,6 +3,7 @@
   "description": "從板橋出發，轉到哪就去哪！",
   "origin": "板橋",
   "spinText": "說走就走，GO!",
+  "map": "Taiwan",
   "items": [
     {
       "label": "基隆",

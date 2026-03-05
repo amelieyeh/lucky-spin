@@ -11,6 +11,20 @@ let wheelData = null;
 let spinning = false;
 let displayItems = [];
 
+// Map name translations (English -> Traditional Chinese)
+const MAP_NAMES_ZH = {
+  Taiwan: "台灣",
+  Japan: "日本",
+  France: "法國",
+  Italy: "義大利",
+  Korea: "韓國",
+  UK: "英國",
+  USA: "美國",
+  Germany: "德國",
+  Spain: "西班牙",
+  Thailand: "泰國",
+};
+
 // Available JSON files in data/ directory
 const availableFiles = [
   { name: "電車吃漢", file: "data/taiwan-railway.json" },
@@ -69,6 +83,15 @@ function loadData(data) {
   modal.classList.remove("visible");
   spinBtn.textContent = data.spinText || "Spin!";
   spinBtn.disabled = false;
+
+  // Update dropdown text with map name
+  const selected = dataSelect.options[dataSelect.selectedIndex];
+  if (selected && data.map) {
+    const baseName = selected.textContent.split(" - ")[0];
+    const mapZh = MAP_NAMES_ZH[data.map] || data.map;
+    selected.textContent = `${baseName} - ${mapZh}`;
+  }
+
   pickDisplayItems();
   renderGrid();
 }
@@ -77,69 +100,100 @@ function pickDisplayItems() {
   displayItems = wheelData.items;
 }
 
-// --- Taiwan shape map ---
-// Each row: [startCol, count] — forms the outline of Taiwan
-// 28 rows × 13 columns, totaling 238 cells
-// East coast (right edge) stays straight at col 12 for rows 2-19
-// West coast bulges at central plains (Changhua), tapers north & south
-const TAIWAN_SHAPE = [
-  [10, 2],  // row 0  - north tip (Keelung)
-  [9, 3],   // row 1
-  [8, 5],   // row 2  - Taipei
-  [7, 6],   // row 3
-  [6, 7],   // row 4  - Taoyuan
-  [5, 8],   // row 5
-  [4, 9],   // row 6  - Hsinchu
-  [3, 10],  // row 7
-  [3, 10],  // row 8  - Miaoli
-  [2, 11],  // row 9
-  [2, 11],  // row 10 - Taichung
-  [1, 12],  // row 11
-  [1, 12],  // row 12
-  [0, 13],  // row 13 - Changhua (widest)
-  [0, 13],  // row 14
-  [0, 13],  // row 15
-  [1, 12],  // row 16 - Yunlin
-  [1, 12],  // row 17
-  [2, 11],  // row 18 - Chiayi
-  [2, 11],  // row 19
-  [2, 10],  // row 20 - Tainan
-  [3, 9],   // row 21
-  [3, 8],   // row 22 - Kaohsiung
-  [4, 7],   // row 23
-  [4, 5],   // row 24 - Pingtung
-  [5, 4],   // row 25
-  [6, 2],   // row 26 - south tip
-  [6, 2],   // row 27 - Eluanbi
-];
+// --- Shape maps ---
+// Each shape: { cols, rows: [[startCol, count], ...] }
 
-const GRID_COLS = 13;
+const SHAPE_MAPS = {
+  Taiwan: {
+    cols: 13,
+    rows: [
+      [10, 2],  // row 0  - north tip (Keelung)
+      [9, 3],   // row 1
+      [8, 5],   // row 2  - Taipei
+      [7, 6],   // row 3
+      [6, 7],   // row 4  - Taoyuan
+      [5, 8],   // row 5
+      [4, 9],   // row 6  - Hsinchu
+      [3, 10],  // row 7
+      [3, 10],  // row 8  - Miaoli
+      [2, 11],  // row 9
+      [2, 11],  // row 10 - Taichung
+      [1, 12],  // row 11
+      [1, 12],  // row 12
+      [0, 13],  // row 13 - Changhua (widest)
+      [0, 13],  // row 14
+      [0, 13],  // row 15
+      [1, 12],  // row 16 - Yunlin
+      [1, 12],  // row 17
+      [2, 11],  // row 18 - Chiayi
+      [2, 11],  // row 19
+      [2, 10],  // row 20 - Tainan
+      [3, 9],   // row 21
+      [3, 8],   // row 22 - Kaohsiung
+      [4, 7],   // row 23
+      [4, 5],   // row 24 - Pingtung
+      [5, 4],   // row 25
+      [6, 2],   // row 26 - south tip
+      [6, 2],   // row 27 - Eluanbi
+    ],
+  },
+};
 
 // --- Grid rendering ---
 
 function renderGrid() {
   gridContainer.innerHTML = "";
-  gridContainer.style.gridTemplateColumns = `repeat(${GRID_COLS}, 1fr)`;
-  gridContainer.style.gridTemplateRows = `repeat(${TAIWAN_SHAPE.length}, 1fr)`;
+
+  const mapKey = wheelData.map || "";
+  const shape = SHAPE_MAPS[mapKey];
+
+  if (shape) {
+    renderShapedGrid(shape);
+  } else {
+    renderPlainGrid();
+  }
+}
+
+function renderShapedGrid(shape) {
+  gridContainer.classList.remove("grid-plain");
+  gridContainer.classList.add("grid-shaped");
+  gridContainer.style.gridTemplateColumns = `repeat(${shape.cols}, 1fr)`;
+  gridContainer.style.gridTemplateRows = `repeat(${shape.rows.length}, 1fr)`;
 
   let itemIdx = 0;
 
-  TAIWAN_SHAPE.forEach((rowDef, row) => {
+  shape.rows.forEach((rowDef, row) => {
     const [startCol, count] = rowDef;
 
     for (let c = 0; c < count && itemIdx < displayItems.length; c++) {
       const item = displayItems[itemIdx];
-      const cell = document.createElement("div");
-      cell.className = "grid-cell";
-      cell.dataset.index = itemIdx;
-      cell.style.setProperty("--cell-color", item.color);
+      const cell = createCell(item, itemIdx);
       cell.style.gridRow = row + 1;
       cell.style.gridColumn = startCol + c + 1;
-      cell.innerHTML = `<span class="grid-label">${item.label}</span>`;
       gridContainer.appendChild(cell);
       itemIdx++;
     }
   });
+}
+
+function renderPlainGrid() {
+  gridContainer.classList.remove("grid-shaped");
+  gridContainer.classList.add("grid-plain");
+  gridContainer.style.gridTemplateColumns = "";
+  gridContainer.style.gridTemplateRows = "";
+
+  displayItems.forEach((item, i) => {
+    gridContainer.appendChild(createCell(item, i));
+  });
+}
+
+function createCell(item, index) {
+  const cell = document.createElement("div");
+  cell.className = "grid-cell";
+  cell.dataset.index = index;
+  cell.style.setProperty("--cell-color", item.color);
+  cell.innerHTML = `<span class="grid-label">${item.label}</span>`;
+  return cell;
 }
 
 function highlightCell(index) {
