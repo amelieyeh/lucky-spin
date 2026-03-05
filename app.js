@@ -220,15 +220,15 @@ function renderHomeCards() {
     homeCards.appendChild(card);
   });
 
-  // Create card
-  const createCard = document.createElement("div");
-  createCard.className = "home-card home-card-create";
-  createCard.innerHTML = `
-    <div class="card-icon"><span class="create-plus">+</span></div>
-    <div class="card-label">Create</div>
-  `;
-  createCard.addEventListener("click", openCreateModal);
-  homeCards.appendChild(createCard);
+  // Create card (hidden for now)
+  // const createCard = document.createElement("div");
+  // createCard.className = "home-card home-card-create";
+  // createCard.innerHTML = `
+  //   <div class="card-icon"><span class="create-plus">+</span></div>
+  //   <div class="card-label">Create</div>
+  // `;
+  // createCard.addEventListener("click", openCreateModal);
+  // homeCards.appendChild(createCard);
 }
 
 async function loadPreset(spin) {
