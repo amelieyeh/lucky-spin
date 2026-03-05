@@ -103,6 +103,40 @@ function clearHighlight() {
   });
 }
 
+// --- Sound effects (Web Audio API) ---
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playTick(pitch) {
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.type = "sine";
+  osc.frequency.value = 600 + pitch * 400;
+  gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.08);
+}
+
+function playWin() {
+  const notes = [523, 659, 784, 1047];
+  notes.forEach((freq, i) => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.type = "sine";
+    osc.frequency.value = freq;
+    const t = audioCtx.currentTime + i * 0.12;
+    gain.gain.setValueAtTime(0.15, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+    osc.start(t);
+    osc.stop(t + 0.3);
+  });
+}
+
 // --- Spin animation (random lighting, 5s ease-out) ---
 
 function startSpin() {
@@ -148,6 +182,7 @@ function startSpin() {
       }
 
       highlightCell(currentLit);
+      playTick(1 - t);
     }
 
     if (t < 1) {
@@ -158,6 +193,7 @@ function startSpin() {
       spinning = false;
       spinBtn.disabled = false;
       spinBtn.classList.remove("spinning");
+      playWin();
       showResult(finalIndex);
     }
   }
