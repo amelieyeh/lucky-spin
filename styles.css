@@ -152,6 +152,12 @@ canvas {
   color: #f5576c;
 }
 
+.result .result-city {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-top: 0.2rem;
+}
+
 .result .result-cta {
   font-size: 0.85rem;
   color: #f093fb;

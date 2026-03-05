@@ -200,10 +200,12 @@ function showResult() {
   const selected = items[index];
   const origin = wheelData.origin;
 
+  const city = selected.city ? `<div class="result-city">${selected.city}</div>` : "";
+
   resultDiv.hidden = false;
   resultDiv.innerHTML = origin
-    ? `<div class="result-origin">From ${origin}</div><div class="result-destination">${selected.label}</div><div class="result-cta">Let's go!</div>`
-    : `<div class="result-destination">${selected.label}</div>`;
+    ? `<div class="result-origin">From ${origin}</div><div class="result-destination">${selected.label}</div>${city}<div class="result-cta">Let's go!</div>`
+    : `<div class="result-destination">${selected.label}</div>${city}`;
 }
 
 // --- Start ---
