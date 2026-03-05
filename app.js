@@ -16,6 +16,7 @@ const gridContainer = document.getElementById("gridContainer");
 let wheelData = null;
 let spinning = false;
 let displayItems = [];
+let BUILTIN_REGIONS = {};
 
 // --- Map translations ---
 const MAP_NAMES_ZH = {
@@ -156,7 +157,12 @@ function downloadJson(data) {
 
 // --- Init ---
 
-function init() {
+async function init() {
+  try {
+    const resp = await fetch("data/builtin-regions.json");
+    BUILTIN_REGIONS = await resp.json();
+  } catch (e) { console.warn("Failed to load builtin regions:", e); }
+
   renderHomeCards();
 
   backBtn.addEventListener("click", goHome);
