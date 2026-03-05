@@ -59,6 +59,12 @@ const presetSpins = [
     file: "data/tokyo-23.json",
     icon: "tokyo",
   },
+  {
+    name: "日本都道府県",
+    map: "Japan",
+    file: "data/japan.json",
+    icon: "japan",
+  },
 ];
 
 // --- Train SVG icon ---
@@ -184,7 +190,7 @@ function renderHomeCards() {
     const mapZh = MAP_NAMES_ZH[spin.map] || spin.map;
     const label = spin.map ? `${spin.name} - ${mapZh}` : spin.name;
 
-    const ICONS = { train: TRAIN_ICON_SVG, tokyo: TOKYO_ICON_SVG };
+    const ICONS = { train: TRAIN_ICON_SVG, tokyo: TOKYO_ICON_SVG, japan: JAPAN_ICON_SVG };
     const iconHtml = ICONS[spin.icon] || "";
 
     card.innerHTML = `
