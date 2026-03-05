@@ -1,14 +1,15 @@
-const canvas = document.getElementById("wheelCanvas");
-const ctx = canvas.getContext("2d");
 const spinBtn = document.getElementById("spinBtn");
 const resultDiv = document.getElementById("result");
 const dataSelect = document.getElementById("dataSelect");
 const fileInput = document.getElementById("fileInput");
 const descriptionEl = document.getElementById("description");
+const gridContainer = document.getElementById("gridContainer");
 
 let wheelData = null;
-let currentAngle = 0;
 let spinning = false;
+let displayItems = []; // The 10-15 items currently shown on the grid
+
+const GRID_SIZE = 12; // Number of cells to display
 
 // Available JSON files in data/ directory
 const availableFiles = [
@@ -29,7 +30,7 @@ function init() {
     if (!dataSelect.value) return;
     const resp = await fetch(dataSelect.value);
     const json = await resp.json();
-    loadWheel(json);
+    loadData(json);
   });
 
   fileInput.addEventListener("change", (e) => {
@@ -38,8 +39,7 @@ function init() {
     const reader = new FileReader();
     reader.onload = (ev) => {
       const json = JSON.parse(ev.target.result);
-      loadWheel(json);
-      // Add to dropdown
+      loadData(json);
       const opt = document.createElement("option");
       opt.value = `imported:${file.name}`;
       opt.textContent = file.name;
@@ -49,25 +49,138 @@ function init() {
     reader.readAsText(file);
   });
 
-  spinBtn.addEventListener("click", spin);
-
-  drawEmpty();
+  spinBtn.addEventListener("click", startSpin);
 }
 
-// --- Load wheel data ---
+// --- Load data ---
 
-function loadWheel(data) {
+function loadData(data) {
   wheelData = data;
   descriptionEl.textContent = data.description || "";
-  currentAngle = 0;
   resultDiv.classList.remove("visible");
   spinBtn.disabled = false;
-  drawWheel();
+  pickDisplayItems();
+  renderGrid();
 }
 
-// --- Drawing ---
+function pickDisplayItems() {
+  const all = wheelData.items;
+  const shuffled = [...all].sort(() => Math.random() - 0.5);
+  displayItems = shuffled.slice(0, GRID_SIZE);
+}
+
+// --- Grid rendering ---
+
+function renderGrid() {
+  gridContainer.innerHTML = "";
+  displayItems.forEach((item, i) => {
+    const cell = document.createElement("div");
+    cell.className = "grid-cell";
+    cell.dataset.index = i;
+    cell.style.setProperty("--cell-color", item.color);
+    cell.innerHTML = `<span class="grid-label">${item.label}</span>`;
+    gridContainer.appendChild(cell);
+  });
+}
+
+function highlightCell(index) {
+  const cells = gridContainer.querySelectorAll(".grid-cell");
+  cells.forEach((cell, i) => {
+    cell.classList.toggle("active", i === index);
+  });
+}
+
+function clearHighlight() {
+  gridContainer.querySelectorAll(".grid-cell").forEach((cell) => {
+    cell.classList.remove("active");
+  });
+}
+
+// --- Spin animation (random lighting, 5s ease-out) ---
+
+function startSpin() {
+  if (spinning || !wheelData) return;
+  spinning = true;
+  spinBtn.disabled = true;
+  spinBtn.classList.add("spinning");
+  resultDiv.classList.remove("visible");
+
+  // Re-shuffle displayed items each spin
+  pickDisplayItems();
+  renderGrid();
+
+  const duration = 5000;
+  const startTime = performance.now();
+  // Pick final winner index ahead of time
+  const finalIndex = Math.floor(Math.random() * displayItems.length);
+
+  // Interval-based lighting: starts fast (~50ms), slows to ~500ms
+  let lastSwitch = 0;
+  let currentLit = -1;
+
+  function animate(now) {
+    const elapsed = now - startTime;
+    const t = Math.min(elapsed / duration, 1);
+
+    // Interval increases from 50ms to 500ms using ease-out
+    const interval = 50 + 450 * easeIn(t);
+
+    if (elapsed - lastSwitch >= interval) {
+      lastSwitch = elapsed;
+
+      if (t < 0.95) {
+        // Random highlight
+        let next;
+        do {
+          next = Math.floor(Math.random() * displayItems.length);
+        } while (next === currentLit && displayItems.length > 1);
+        currentLit = next;
+      } else {
+        // Final phase: lock to winner
+        currentLit = finalIndex;
+      }
+
+      highlightCell(currentLit);
+    }
+
+    if (t < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      // Ensure final highlight
+      highlightCell(finalIndex);
+      spinning = false;
+      spinBtn.disabled = false;
+      spinBtn.classList.remove("spinning");
+      showResult(finalIndex);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+function easeIn(t) {
+  return t * t;
+}
+
+function showResult(index) {
+  const selected = displayItems[index];
+  const origin = wheelData.origin;
+  const city = selected.city ? `<div class="result-city">${selected.city}</div>` : "";
+
+  resultDiv.classList.add("visible");
+  resultDiv.innerHTML = origin
+    ? `<div class="result-origin">From ${origin}</div><div class="result-destination">${selected.label}</div>${city}<div class="result-cta">Let's go!</div>`
+    : `<div class="result-destination">${selected.label}</div>${city}`;
+}
+
+// --- Wheel drawing (preserved, not currently used) ---
+
+/*
+let currentAngle = 0;
 
 function drawEmpty() {
+  const canvas = document.getElementById("wheelCanvas");
+  const ctx = canvas.getContext("2d");
   const cx = canvas.width / 2;
   const cy = canvas.height / 2;
   const r = cx - 10;
@@ -88,6 +201,8 @@ function drawEmpty() {
 
 function drawWheel() {
   if (!wheelData) return;
+  const canvas = document.getElementById("wheelCanvas");
+  const ctx = canvas.getContext("2d");
   const items = wheelData.items;
   const n = items.length;
   const cx = canvas.width / 2;
@@ -101,7 +216,6 @@ function drawWheel() {
     const startAngle = currentAngle + i * sliceAngle;
     const endAngle = startAngle + sliceAngle;
 
-    // Slice
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.arc(cx, cy, r, startAngle, endAngle);
@@ -112,7 +226,6 @@ function drawWheel() {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Label
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(startAngle + sliceAngle / 2);
@@ -126,7 +239,6 @@ function drawWheel() {
     ctx.restore();
   });
 
-  // Center circle
   ctx.beginPath();
   ctx.arc(cx, cy, 22, 0, Math.PI * 2);
   ctx.fillStyle = "#1a1a2e";
@@ -144,69 +256,7 @@ function labelFontSize(n) {
   if (n <= 36) return 10;
   return 8;
 }
-
-// --- Spin animation ---
-
-function spin() {
-  if (spinning || !wheelData) return;
-  spinning = true;
-  spinBtn.disabled = true;
-  spinBtn.classList.add("spinning");
-  resultDiv.classList.remove("visible");
-
-  const duration = 5000;
-  const totalRotation = Math.PI * 2 * (8 + Math.random() * 4); // 8-12 full rotations
-  const startAngle = currentAngle;
-  const startTime = performance.now();
-
-  function easeOut(t) {
-    return 1 - Math.pow(1 - t, 3);
-  }
-
-  function animate(now) {
-    const elapsed = now - startTime;
-    const t = Math.min(elapsed / duration, 1);
-    const eased = easeOut(t);
-
-    currentAngle = startAngle + totalRotation * eased;
-    drawWheel();
-
-    if (t < 1) {
-      requestAnimationFrame(animate);
-    } else {
-      spinning = false;
-      spinBtn.disabled = false;
-      spinBtn.classList.remove("spinning");
-      showResult();
-    }
-  }
-
-  requestAnimationFrame(animate);
-}
-
-function showResult() {
-  const items = wheelData.items;
-  const n = items.length;
-  const sliceAngle = (Math.PI * 2) / n;
-
-  // The arrow is at the top (angle = -PI/2 = 3PI/2)
-  // Normalize current angle
-  const normalized = ((currentAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-  // Arrow points at -PI/2; the slice at position 0 starts at currentAngle
-  // We need to find which slice the arrow (top) falls into
-  const arrowAngle = (Math.PI * 2 - normalized + Math.PI * 1.5) % (Math.PI * 2);
-  const index = Math.floor(arrowAngle / sliceAngle) % n;
-
-  const selected = items[index];
-  const origin = wheelData.origin;
-
-  const city = selected.city ? `<div class="result-city">${selected.city}</div>` : "";
-
-  resultDiv.classList.add("visible");
-  resultDiv.innerHTML = origin
-    ? `<div class="result-origin">From ${origin}</div><div class="result-destination">${selected.label}</div>${city}<div class="result-cta">Let's go!</div>`
-    : `<div class="result-destination">${selected.label}</div>${city}`;
-}
+*/
 
 // --- Start ---
 init();

@@ -17,7 +17,7 @@ body {
 .container {
   text-align: center;
   padding: 2rem;
-  max-width: 600px;
+  max-width: 900px;
   width: 100%;
 }
 
@@ -69,6 +69,52 @@ body {
   background: #1a4a7a;
 }
 
+/* --- Grid cells --- */
+
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 2rem;
+  min-height: 80px;
+}
+
+.grid-cell {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  background: #16213e;
+  border: 2px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.grid-cell .grid-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #888;
+  transition: color 0.15s ease;
+}
+
+.grid-cell.active {
+  background: var(--cell-color);
+  border-color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px var(--cell-color), 0 0 40px rgba(255,255,255,0.1);
+  z-index: 2;
+}
+
+.grid-cell.active .grid-label {
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* --- Wheel (hidden) --- */
+
 .wheel-wrapper {
   position: relative;
   display: inline-block;
@@ -94,6 +140,8 @@ canvas {
   max-width: 100%;
   height: auto;
 }
+
+/* --- Spin button --- */
 
 .spin-btn {
   padding: 0.75rem 2.5rem;
@@ -129,8 +177,10 @@ canvas {
   50% { opacity: 0.6; }
 }
 
+/* --- Result --- */
+
 .result {
-  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   padding: 1rem 2rem;
   background: #16213e;
   border-radius: 12px;
@@ -178,5 +228,6 @@ canvas {
 @media (max-width: 540px) {
   .container { padding: 1rem; }
   .title { font-size: 1.8rem; }
-  canvas { width: 320px; height: 320px; }
+  .grid-cell { width: 64px; height: 64px; }
+  .grid-cell .grid-label { font-size: 0.8rem; }
 }
