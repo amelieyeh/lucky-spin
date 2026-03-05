@@ -67,6 +67,7 @@ function loadData(data) {
   wheelData = data;
   descriptionEl.textContent = data.description || "";
   modal.classList.remove("visible");
+  spinBtn.textContent = data.spinText || "Spin!";
   spinBtn.disabled = false;
   pickDisplayItems();
   renderGrid();
