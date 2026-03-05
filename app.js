@@ -7,9 +7,7 @@ const gridContainer = document.getElementById("gridContainer");
 
 let wheelData = null;
 let spinning = false;
-let displayItems = []; // The 10-15 items currently shown on the grid
-
-const GRID_SIZE = 12; // Number of cells to display
+let displayItems = [];
 
 // Available JSON files in data/ directory
 const availableFiles = [
@@ -64,9 +62,7 @@ function loadData(data) {
 }
 
 function pickDisplayItems() {
-  const all = wheelData.items;
-  const shuffled = [...all].sort(() => Math.random() - 0.5);
-  displayItems = shuffled.slice(0, GRID_SIZE);
+  displayItems = wheelData.items;
 }
 
 // --- Grid rendering ---

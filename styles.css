@@ -17,7 +17,7 @@ body {
 .container {
   text-align: center;
   padding: 2rem;
-  max-width: 900px;
+  max-width: 1200px;
   width: 100%;
 }
 
@@ -74,16 +74,16 @@ body {
 .grid-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 4px;
   justify-content: center;
   margin-bottom: 2rem;
   min-height: 80px;
 }
 
 .grid-cell {
-  width: 80px;
-  height: 80px;
-  border-radius: 10px;
+  width: 58px;
+  height: 58px;
+  border-radius: 6px;
   background: #16213e;
   border: 2px solid #333;
   display: flex;
@@ -94,7 +94,7 @@ body {
 }
 
 .grid-cell .grid-label {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: #888;
   transition: color 0.15s ease;
@@ -226,8 +226,9 @@ canvas {
 }
 
 @media (max-width: 540px) {
-  .container { padding: 1rem; }
+  .container { padding: 0.5rem; }
   .title { font-size: 1.8rem; }
-  .grid-cell { width: 64px; height: 64px; }
-  .grid-cell .grid-label { font-size: 0.8rem; }
+  .grid-container { gap: 3px; }
+  .grid-cell { width: 44px; height: 44px; }
+  .grid-cell .grid-label { font-size: 0.6rem; }
 }
