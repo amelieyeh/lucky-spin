@@ -138,9 +138,11 @@ function drawWheel() {
 
 function labelFontSize(n) {
   if (n <= 8) return 16;
+  if (n <= 12) return 14;
   if (n <= 16) return 13;
   if (n <= 24) return 11;
-  return 9;
+  if (n <= 36) return 10;
+  return 8;
 }
 
 // --- Spin animation ---
@@ -149,6 +151,7 @@ function spin() {
   if (spinning || !wheelData) return;
   spinning = true;
   spinBtn.disabled = true;
+  spinBtn.classList.add("spinning");
   resultDiv.hidden = true;
 
   const duration = 5000;
@@ -173,6 +176,7 @@ function spin() {
     } else {
       spinning = false;
       spinBtn.disabled = false;
+      spinBtn.classList.remove("spinning");
       showResult();
     }
   }
@@ -198,8 +202,8 @@ function showResult() {
 
   resultDiv.hidden = false;
   resultDiv.innerHTML = origin
-    ? `From <strong>${origin}</strong> to <span class="label">${selected.label}</span>!`
-    : `<span class="label">${selected.label}</span>`;
+    ? `<div class="result-origin">From ${origin}</div><div class="result-destination">${selected.label}</div><div class="result-cta">Let's go!</div>`
+    : `<div class="result-destination">${selected.label}</div>`;
 }
 
 // --- Start ---
